@@ -5,7 +5,7 @@ function Table({ row, screen2 }) {
     //setting a deafult value to avoid error if no props passed
     row = row ? row : [{ header1: 'value1', header2: 'value2', header3: 'vlaue3' }];
 
-    let initialEnd=!screen2?5:row.length
+    let initialEnd = !screen2 ? 5 : row.length
 
     const [search, setSearch] = useState({});
     const [data, setData] = useState([]);
@@ -14,10 +14,6 @@ function Table({ row, screen2 }) {
     const [globalSerach, setGlobalSerach] = useState('');
     const [start, setStart] = useState(0);
     const [end, setEnd] = useState(initialEnd);
-
-
-
-    
 
     useEffect(() => {
         let result = row?.filter((value) => (search?.search1 !== '' && value[Object.keys(value)[0]].indexOf(search?.search1) > -1)
@@ -32,6 +28,7 @@ function Table({ row, screen2 }) {
         result.length ? setData(result) : setData(row)
         console.log(result, search)
     }, [search])
+
     useEffect(() => {
         let result = row?.filter((value) => (value[Object.keys(value)[0]]?.indexOf(globalSerach) > -1)
             || (value[Object.keys(value)[1]]?.indexOf(globalSerach) > -1)
@@ -40,18 +37,12 @@ function Table({ row, screen2 }) {
             || (value[Object.keys(value)[4]]?.indexOf(globalSerach) > -1)
             || (value[Object.keys(value)[5]]?.indexOf(globalSerach) > -1)
         )
-
-
         !globalSerach == '' ? setFiltered(result) : setFiltered(row)
         !globalSerach == '' ? setData(result) : setData(row)
         console.log(result, globalSerach)
     }, [globalSerach])
 
-
-
     const sortData = () => {
-
-
         let sorted = filtered.length ? filtered?.sort(compare) : row?.sort(compare)
         console.log(sorted, "sort")
         sorted ? setData(sorted) : setData(row)
@@ -85,7 +76,7 @@ function Table({ row, screen2 }) {
     return (
 
         <div className="overflow-x-auto relative shadow-md sm:rounded-lg mt-20 w-full md:w-2/3 mx-auto">
-            {screen2 && <span onClick={refresh}><Button text={'Refresh'} /></span>}
+            {screen2 && <span className='my-2' onClick={refresh}><Button text={'Refresh'} /></span>}
             {!screen2 && <input placeholder='Global search...' className='h-10 my-4' value={globalSerach} onChange={(e) => setGlobalSerach(e.target.value)} />}
 
             <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
@@ -114,24 +105,42 @@ function Table({ row, screen2 }) {
                         </>}
                     </tr>
                     <tr>
-                        <th scope="col" className="py-3 px-6 " onClick={() => setSortColumn(0)}>
-                            col 1
+                        <th scope="col" className="py-3 px-6" onClick={() => setSortColumn(0)}>
+                            col 1 {<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                            </svg>
+                            }
                         </th>
                         <th scope="col" className="py-3 px-6 " onClick={() => setSortColumn(1)}>
-                            col 2
+                            col 2{<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                            </svg>
+                            }
                         </th>
                         <th scope="col" className="py-3 px-6 " onClick={() => setSortColumn(2)}>
-                            col 3
+                            col 3{<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                            </svg>
+                            }
                         </th>
                         <th scope="col" className="py-3 px-6 " onClick={() => setSortColumn(3)}>
-                            col 4
+                            col 4{<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                            </svg>
+                            }
                         </th>
                         {screen2 && <>
                             <th scope="col" className="py-3 px-6 " onClick={() => setSortColumn(4)}>
-                                col 5
+                                col 5{<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                            </svg>
+                            }
                             </th>
                             <th scope="col" className="py-3 px-6 " onClick={() => setSortColumn(5)}>
-                                col 6
+                                col 6{<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                            </svg>
+                            }
                             </th>
                         </>}
                     </tr>
@@ -143,7 +152,7 @@ function Table({ row, screen2 }) {
 
                 </tbody>
             </table>
-            {!screen2 && <span className='text-white w-full'>{`Page ${end/5} of ${Math.floor(data.length/5)+1}`}</span>}
+            {!screen2 && <span className='text-white w-full'>{`Page ${end / 5} of ${Math.floor(data.length / 5) + 1}`}</span>}
             {!screen2 && <div className='flex justify-between w-full'>
                 {start > 0 ? <spaan onClick={() => { setEnd(end - 5); setStart(start - 5) }}><Button text='Prev' /></spaan> : <span></span>}
                 {end < data.length ? <span onClick={() => { setEnd(end + 5); setStart(start + 5) }}> <Button text='Next' /></span> : <span></span>}
