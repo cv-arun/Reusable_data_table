@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
+import Button from './button';
 
 function Table({ row, screen2 }) {
     row = row ? row : [{ header1: 'value1', header2: 'value2', header3: 'vlaue3' }];
@@ -6,6 +7,7 @@ function Table({ row, screen2 }) {
     const [data, setData] = useState([]);
     const [filtered, setFiltered] = useState([]);
     const [sortColumn, setSortColumn] = useState(-1)
+
 
 
     useEffect(() => {
@@ -22,12 +24,12 @@ function Table({ row, screen2 }) {
         console.log(result, search)
     }, [search])
 
-    
-
-    const sortData=()=>{
 
 
-        let sorted =filtered.length? filtered?.sort(compare):row?.sort(compare)
+    const sortData = () => {
+
+
+        let sorted = filtered.length ? filtered?.sort(compare) : row?.sort(compare)
         console.log(sorted, "sort")
         sorted ? setData(sorted) : setData(row)
 
@@ -44,8 +46,12 @@ function Table({ row, screen2 }) {
     }
 
     useEffect(() => {
-       sortData()
+        screen2 && sortData()
     }, [sortColumn])
+
+    const refresh = () => {
+        setData(row)
+    }
 
 
 
@@ -53,7 +59,7 @@ function Table({ row, screen2 }) {
     return (
 
         <div className="overflow-x-auto relative shadow-md sm:rounded-lg mt-20 w-full md:w-2/3 mx-auto">
-
+            {screen2 && <span  onClick={refresh}><Button text={'Refresh'} /></span>}
             <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                 <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
