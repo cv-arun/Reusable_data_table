@@ -3,8 +3,9 @@ import React, { useEffect, useState } from 'react'
 function Table({ row, screen2 }) {
     row = row ? row : [{ header1: 'value1', header2: 'value2', header3: 'vlaue3' }];
     const [search, setSearch] = useState({});
-    const [data, setData] = useState([])
-    const [filtered, setFiltered] = useState([])
+    const [data, setData] = useState([]);
+    const [filtered, setFiltered] = useState([]);
+    const [sortColumn, setSortColumn] = useState(-1)
 
 
     useEffect(() => {
@@ -17,14 +18,34 @@ function Table({ row, screen2 }) {
 
         )
         result.length ? setFiltered(result) : setFiltered(row)
+        result.length ? setData(result) : setData(row)
         console.log(result, search)
     }, [search])
 
+    
+
+    const sortData=()=>{
+
+
+        let sorted =filtered.length? filtered?.sort(compare):row?.sort(compare)
+        console.log(sorted, "sort")
+        sorted ? setData(sorted) : setData(row)
+
+        function compare(a, b) {
+            if (a[Object.keys(a)[sortColumn]] < b[Object.keys(b)[sortColumn]]) {
+                return -1;
+            }
+            if (a[Object.keys(a)[sortColumn]] > b[Object.keys(b)[sortColumn]]) {
+                return 1;
+            }
+            return 0;
+        }
+
+    }
+
     useEffect(() => {
-        let sorted = filtered?.sort((value)=>value[Object.keys(value)[1]])
-        console.log(sorted,"sort")
-        sorted.length ? setData(sorted) : setData(row)
-    }, [search])
+       sortData()
+    }, [sortColumn])
 
 
 
@@ -59,23 +80,23 @@ function Table({ row, screen2 }) {
                         </>}
                     </tr>
                     <tr>
-                        <th scope="col" className="py-3 px-6 ">
+                        <th scope="col" className="py-3 px-6 " onClick={() => setSortColumn(0)}>
                             col 1
                         </th>
-                        <th scope="col" className="py-3 px-6 ">
+                        <th scope="col" className="py-3 px-6 " onClick={() => setSortColumn(1)}>
                             col 2
                         </th>
-                        <th scope="col" className="py-3 px-6 ">
+                        <th scope="col" className="py-3 px-6 " onClick={() => setSortColumn(2)}>
                             col 3
                         </th>
-                        <th scope="col" className="py-3 px-6 ">
+                        <th scope="col" className="py-3 px-6 " onClick={() => setSortColumn(3)}>
                             col 4
                         </th>
                         {screen2 && <>
-                            <th scope="col" className="py-3 px-6 ">
+                            <th scope="col" className="py-3 px-6 " onClick={() => setSortColumn(4)}>
                                 col 5
                             </th>
-                            <th scope="col" className="py-3 px-6 ">
+                            <th scope="col" className="py-3 px-6 " onClick={() => setSortColumn(5)}>
                                 col 6
                             </th>
                         </>}
