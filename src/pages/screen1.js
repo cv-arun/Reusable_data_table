@@ -7,7 +7,7 @@ function Screen1() {
     return (
         <>
             <div className='bg-[#111827] min-h-screen'>
-                <Header  />
+                <Header active1 />
                 <Table row={data}/>
             </div>
         </>

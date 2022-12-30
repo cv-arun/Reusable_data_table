@@ -8,7 +8,7 @@ function Screen2() {
     return (
         <>
            <div className='bg-[#111827] min-h-screen'>
-                <Header />
+                <Header  active2/>
                 <Table screen2 row={data} />
             </div>
         </>
