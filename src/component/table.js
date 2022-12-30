@@ -7,6 +7,11 @@ function Table({ row, screen2 }) {
     const [data, setData] = useState([]);
     const [filtered, setFiltered] = useState([]);
     const [sortColumn, setSortColumn] = useState(-1)
+    const [globalSerach, setGlobalSerach] = useState('');
+    const [start, setStart] = useState(0);
+    const [end, setEnd] = useState(5);
+
+   
 
 
 
@@ -23,6 +28,20 @@ function Table({ row, screen2 }) {
         result.length ? setData(result) : setData(row)
         console.log(result, search)
     }, [search])
+    useEffect(() => {
+        let result = row?.filter((value) => (value[Object.keys(value)[0]]?.indexOf(globalSerach) > -1)
+            || (value[Object.keys(value)[1]]?.indexOf(globalSerach) > -1)
+            || (value[Object.keys(value)[2]]?.indexOf(globalSerach) > -1)
+            || (value[Object.keys(value)[3]]?.indexOf(globalSerach) > -1)
+            || (value[Object.keys(value)[4]]?.indexOf(globalSerach) > -1)
+            || (value[Object.keys(value)[5]]?.indexOf(globalSerach) > -1)
+        )
+
+
+        !globalSerach == '' ? setFiltered(result) : setFiltered(row)
+        !globalSerach == '' ? setData(result) : setData(row)
+        console.log(result, globalSerach)
+    }, [globalSerach])
 
 
 
@@ -56,10 +75,15 @@ function Table({ row, screen2 }) {
 
 
 
+
+
+
     return (
 
         <div className="overflow-x-auto relative shadow-md sm:rounded-lg mt-20 w-full md:w-2/3 mx-auto">
-            {screen2 && <span  onClick={refresh}><Button text={'Refresh'} /></span>}
+            {screen2 && <span onClick={refresh}><Button text={'Refresh'} /></span>}
+            {!screen2 && <input placeholder='Global search...' className='h-10 my-4' value={globalSerach} onChange={(e) => setGlobalSerach(e.target.value)} />}
+
             <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                 <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
@@ -109,12 +133,16 @@ function Table({ row, screen2 }) {
                     </tr>
                 </thead>
                 <tbody>
-                    {data?.map((value, i) => <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                    {data?.map((value, i) => i >= start && i < end ? <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                         {Object.values(value)?.map((curr) => <td className="py-4 px-6">{curr}</td>)}
-                    </tr>)}
+                    </tr> : null)}
 
                 </tbody>
             </table>
+           {!screen2 && <div className='flex justify-between w-full'>
+               {start>0 ? <spaan  onClick={() => { setEnd(end - 5); setStart(start - 5) }}><Button text='Prev' /></spaan>:<span></span>}
+               {end<data.length ? <span onClick={() => { setEnd(end + 5); setStart(start + 5) }}> <Button text='Next' /></span>:<span></span>}
+            </div>}
         </div>
 
     )
