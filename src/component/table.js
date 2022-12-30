@@ -2,18 +2,22 @@ import React, { useEffect, useState } from 'react';
 import Button from './button';
 
 function Table({ row, screen2 }) {
+    //setting a deafult value to avoid error if no props passed
     row = row ? row : [{ header1: 'value1', header2: 'value2', header3: 'vlaue3' }];
+
+    let initialEnd=!screen2?5:row.length
+
     const [search, setSearch] = useState({});
     const [data, setData] = useState([]);
     const [filtered, setFiltered] = useState([]);
     const [sortColumn, setSortColumn] = useState(-1)
     const [globalSerach, setGlobalSerach] = useState('');
     const [start, setStart] = useState(0);
-    const [end, setEnd] = useState(5);
-
-   
+    const [end, setEnd] = useState(initialEnd);
 
 
+
+    
 
     useEffect(() => {
         let result = row?.filter((value) => (search?.search1 !== '' && value[Object.keys(value)[0]].indexOf(search?.search1) > -1)
@@ -88,24 +92,24 @@ function Table({ row, screen2 }) {
                 <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
                         <th  >
-                            <input className='h-10' value={search?.search1} onChange={(e) => setSearch({ ...search, search1: e.target.value })} />
+                            <input placeholder='col search...' className='h-10' value={search?.search1} onChange={(e) => setSearch({ ...search, search1: e.target.value })} />
                         </th>
                         <th  >
-                            <input className='h-10' onChange={(e) => setSearch({ ...search, search2: e.target.value })} />
+                            <input placeholder='col search...' className='h-10' onChange={(e) => setSearch({ ...search, search2: e.target.value })} />
                         </th>
                         <th  >
-                            <input className='h-10' onChange={(e) => setSearch({ ...search, search3: e.target.value })} />
+                            <input placeholder='col search...' className='h-10' onChange={(e) => setSearch({ ...search, search3: e.target.value })} />
                         </th>
                         <th  >
-                            <input className='h-10' onChange={(e) => setSearch({ ...search, search4: e.target.value })} />
+                            <input placeholder='col search...' className='h-10' onChange={(e) => setSearch({ ...search, search4: e.target.value })} />
                         </th>
 
                         {screen2 && <>
                             <th scope="col">
-                                <input className='h-10' onChange={(e) => setSearch({ ...search, search5: e.target.value })} />
+                                <input placeholder='col search...' className='h-10' onChange={(e) => setSearch({ ...search, search5: e.target.value })} />
                             </th>
                             <th scope="col" >
-                                <input className='h-10' onChange={(e) => setSearch({ ...search, search6: e.target.value })} />
+                                <input placeholder='col search...' className='h-10' onChange={(e) => setSearch({ ...search, search6: e.target.value })} />
                             </th>
                         </>}
                     </tr>
@@ -139,9 +143,10 @@ function Table({ row, screen2 }) {
 
                 </tbody>
             </table>
-           {!screen2 && <div className='flex justify-between w-full'>
-               {start>0 ? <spaan  onClick={() => { setEnd(end - 5); setStart(start - 5) }}><Button text='Prev' /></spaan>:<span></span>}
-               {end<data.length ? <span onClick={() => { setEnd(end + 5); setStart(start + 5) }}> <Button text='Next' /></span>:<span></span>}
+            {!screen2 && <span className='text-white w-full'>{`Page ${end/5} of ${Math.floor(data.length/5)+1}`}</span>}
+            {!screen2 && <div className='flex justify-between w-full'>
+                {start > 0 ? <spaan onClick={() => { setEnd(end - 5); setStart(start - 5) }}><Button text='Prev' /></spaan> : <span></span>}
+                {end < data.length ? <span onClick={() => { setEnd(end + 5); setStart(start + 5) }}> <Button text='Next' /></span> : <span></span>}
             </div>}
         </div>
 
