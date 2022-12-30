@@ -1,22 +1,89 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
-function Table({ row }) {
-    row = row ? row : [{ header1: 'value1', header2: 'value2', header3: 'vlaue3' }]
+function Table({ row, screen2 }) {
+    row = row ? row : [{ header1: 'value1', header2: 'value2', header3: 'vlaue3' }];
+    const [search, setSearch] = useState({});
+    const [data, setData] = useState([])
+    const [filtered, setFiltered] = useState([])
+
+
+    useEffect(() => {
+        let result = row?.filter((value) => (search?.search1 !== '' && value[Object.keys(value)[0]].indexOf(search?.search1) > -1)
+            || (search?.search2 !== '' && value[Object.keys(value)[1]].indexOf(search?.search2) > -1)
+            || (search?.search3 !== '' && value[Object.keys(value)[2]].indexOf(search?.search3) > -1)
+            || (search?.search4 !== '' && value[Object.keys(value)[3]].indexOf(search?.search4) > -1)
+            || (screen2 && (search?.search5 !== '' && value[Object.keys(value)[4]].indexOf(search?.search5) > -1))
+            || (screen2 && (search?.search6 !== '' && value[Object.keys(value)[5]].indexOf(search?.search6) > -1))
+
+        )
+        result.length ? setFiltered(result) : setFiltered(row)
+        console.log(result, search)
+    }, [search])
+
+    useEffect(() => {
+        let sorted = filtered?.sort((value)=>value[Object.keys(value)[1]])
+        console.log(sorted,"sort")
+        sorted.length ? setData(sorted) : setData(row)
+    }, [search])
+
+
+
+
     return (
 
-        <div class="overflow-x-auto relative shadow-md sm:rounded-lg mt-20 w-full md:w-2/3 mx-auto">
-           <div className={`flex justify-between`}> {Object.keys(row[0])?.map((curr, i) => <input className='w-full mx-5'/>)}</div>
-            <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+        <div className="overflow-x-auto relative shadow-md sm:rounded-lg mt-20 w-full md:w-2/3 mx-auto">
+
+            <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
-                        {Object.keys(row[0])?.map((curr, i) => <th scope="col" class="py-3 px-6 ">
-                            {curr}
-                        </th>)}
+                        <th  >
+                            <input className='h-10' value={search?.search1} onChange={(e) => setSearch({ ...search, search1: e.target.value })} />
+                        </th>
+                        <th  >
+                            <input className='h-10' onChange={(e) => setSearch({ ...search, search2: e.target.value })} />
+                        </th>
+                        <th  >
+                            <input className='h-10' onChange={(e) => setSearch({ ...search, search3: e.target.value })} />
+                        </th>
+                        <th  >
+                            <input className='h-10' onChange={(e) => setSearch({ ...search, search4: e.target.value })} />
+                        </th>
+
+                        {screen2 && <>
+                            <th scope="col">
+                                <input className='h-10' onChange={(e) => setSearch({ ...search, search5: e.target.value })} />
+                            </th>
+                            <th scope="col" >
+                                <input className='h-10' onChange={(e) => setSearch({ ...search, search6: e.target.value })} />
+                            </th>
+                        </>}
+                    </tr>
+                    <tr>
+                        <th scope="col" className="py-3 px-6 ">
+                            col 1
+                        </th>
+                        <th scope="col" className="py-3 px-6 ">
+                            col 2
+                        </th>
+                        <th scope="col" className="py-3 px-6 ">
+                            col 3
+                        </th>
+                        <th scope="col" className="py-3 px-6 ">
+                            col 4
+                        </th>
+                        {screen2 && <>
+                            <th scope="col" className="py-3 px-6 ">
+                                col 5
+                            </th>
+                            <th scope="col" className="py-3 px-6 ">
+                                col 6
+                            </th>
+                        </>}
                     </tr>
                 </thead>
                 <tbody>
-                    {row?.map((value, i) => <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                        {Object.values(value)?.map((curr) => <td class="py-4 px-6">{curr}</td>)}
+                    {data?.map((value, i) => <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                        {Object.values(value)?.map((curr) => <td className="py-4 px-6">{curr}</td>)}
                     </tr>)}
 
                 </tbody>

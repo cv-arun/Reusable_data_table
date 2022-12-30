@@ -3,13 +3,13 @@ import Table from '../component/table';
 import Header from '../component/header';
 function Screen1() {
     const data = [
-        { name: 'arun', place: 'calicut', email: 'cvarun@gmail.com', state: 'kerala', country: 'india' },
-        { name: 'arun2', place: 'calicut', email: 'cvarun@gmail.com2', state: 'kerala', country: 'india' },
-        { name: 'arun3', place: 'calicut', email: 'cvarun@gmail.com3', state: 'kerala', country: 'india' },
-        { name: 'arun4', place: 'calicut', email: 'cvarun@gmail.com4', state: 'kerala', country: 'india' },
-        { name: 'arun5', place: 'calicut', email: 'cvarun@gmail.com5', state: 'kerala', country: 'india' },
-        { name: 'arun6', place: 'calicut', email: 'cvarun@gmail.com6', state: 'kerala', country: 'india' },
-        { name: 'arun7', place: 'calicut', email: 'cvarun@gmail.com7', state: 'kerala', country: 'india' },
+        { name: 'arun', place: 'calicut', email: 'cvarun@gmail.com', state: 'kerala' },
+        { name: 'arun2', place: 'calicut1', email: 'cvarun@gmail.com2', state: 'kerala' },
+        { name: 'arun9', place: 'calicut2', email: 'cvarun@gmail.com3', state: 'kerala' },
+        { name: 'arun4', place: 'calicut3', email: 'cvarun@gmail.com4', state: 'kerala' },
+        { name: 'arun5', place: 'calicut4', email: 'cvarun@gmail.com5', state: 'kerala' },
+        { name: 'arun3', place: 'calicut5', email: 'cvarun@gmail.com6', state: 'kerala'  },
+        { name: 'arun7', place: 'calicut6', email: 'cvarun@gmail.com7', state: 'kerala' },
     ]
     return (
         <>
